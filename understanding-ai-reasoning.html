@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding AI Reasoning — Vichar Lok</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=Spectral:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #fefefe;
+            --color-text: #1a1a1a;
+            --color-text-muted: #666666;
+            --color-border: #e5e5e5;
+            --color-hover: #f5f5f5;
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Spectral', serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Article Header */
+        .article-header {
+            padding: 4rem 0 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .article-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-intro {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        /* Article Content */
+        .article-content {
+            padding-bottom: 4rem;
+        }
+
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            margin: 3rem 0 1.5rem;
+        }
+
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+        }
+
+        .article-content em {
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .footer-nav {
+            margin-bottom: 2rem;
+        }
+
+        .footer-link {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-link:hover {
+            opacity: 0.6;
+        }
+
+        .copyright {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                font-size: 17px;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .article-header {
+                padding: 3rem 0 2rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.75rem;
+            }
+
+            .article-content h3 {
+                font-size: 1.35rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="back-link">← Back to Articles</a>
+        </nav>
+
+        <header class="article-header">
+            <div class="article-meta">
+                <span>February 15, 2026</span>
+                <span style="margin: 0 1rem;">·</span>
+                <span>15 min read</span>
+            </div>
+            <h1>Understanding AI Reasoning</h1>
+            <p class="article-intro">
+                How do large language models like ChatGPT actually "think"? An in-depth exploration of pattern-based reasoning, emergent behavior, human bias in fine-tuning, and the fundamental limitations of artificial intelligence that everyone should understand.
+            </p>
+        </header>
+
+        <article class="article-content">
+            <h2>1. Understanding AI Reasoning</h2>
+            
+            <p>Imagine a student who has read every book in a giant library, but who never attended school or had a teacher explain concepts. This student can answer questions based on patterns in the books, noticing how ideas are connected, but doesn't "understand" them the way a human does. In many ways, this is similar to how ChatGPT works.</p>
+
+            <p>ChatGPT is a type of artificial intelligence called a large language model, built on the Transformer architecture introduced in 2017 famous paper <em>Attention Is All You Need</em>. This architecture allows the model to process entire sentences or passages at once, rather than word by word like older models. By looking at every word in relation to every other word (a process called self-attention), the model learns relationships, patterns, and reasoning chains in language.</p>
+
+            <p>Unlike a human, ChatGPT does not think, feel, or understand. It doesn't have consciousness or awareness. Its outputs are generated by statistical patterns learned during training. But because these patterns are learned over billions of words, the model can simulate reasoning that feels coherent, logical, and even insightful.</p>
+
+            <h3>1.1 Pattern-based Reasoning</h3>
+
+            <p>When people ask ChatGPT a question, it doesn't "remember" facts like a database. Instead, it predicts the most likely next word based on what it has learned. Think of it like a super-intelligent autocomplete system. For example:</p>
+
+            <ul>
+                <li>If you ask, "Why is the sky blue?" the model doesn't recall a textbook, it generates an answer using patterns in text where "sky," "blue," "light," and "scattering" co-occur.</li>
+                <li>If you ask, "What is Section 11 of the Income-tax Act?" it can combine patterns of legal text, summaries, and examples it has seen during training to produce a plausible, structured answer.</li>
+            </ul>
+
+            <p>Even multi-step reasoning is possible. Suppose you ask:</p>
+
+            <p><em>"If a charitable trust sells an asset and earns a short-term capital gain, how can it apply Section 11 without paying tax?"</em></p>
+
+            <p>The model doesn't "look it up." Instead, it generates reasoning step by step, by chaining patterns learned from examples of trust law, tax provisions, and legal interpretations. This is why it can appear as if the AI is reasoning like a human, when in reality it is statistically generating the most coherent chain of tokens.</p>
+
+            <h2>2. Guided Learning and Fine-tuning</h2>
+
+            <p>While pretraining gives the model raw reasoning ability, it is not inherently aligned with human safety or helpfulness. To fix this, OpenAI applies several guided learning methods:</p>
+
+            <h3>2.1 Pretraining</h3>
+
+            <p>Pretraining is the initial phase where the model learns general patterns of language. It is exposed to billions of words from books, articles, websites, and other sources. At this stage:</p>
+
+            <ul>
+                <li>There is no human supervision over content or reasoning correctness.</li>
+                <li>The model learns grammar, facts, and logical patterns, but also biases present in the text.</li>
+                <li>The output is only guided by the objective function: predict the next token accurately.</li>
+            </ul>
+
+            <p>Think of pretraining like learning to read every book in a library. You absorb patterns of language, relationships between concepts, and styles of reasoning — but no one tells you which ideas are correct or ethical.</p>
+
+            <h3>2.2 Supervised Fine-Tuning (SFT)</h3>
+
+            <p>Once pretraining is complete, the model is exposed to human-guided examples. Trainers provide:</p>
+
+            <ul>
+                <li>Input prompts</li>
+                <li>Ideal outputs</li>
+            </ul>
+
+            <p>For example, a trainer might prompt:</p>
+
+            <p><em>"Explain why a charitable trust cannot treat all sundry creditors as exempt under Section 11."</em></p>
+
+            <p>And then provide a structured, legally correct response. The model adjusts its weights to prefer outputs similar to this example when it encounters similar prompts.</p>
+
+            <p>This stage teaches the AI how humans expect answers to be formatted, reasoned, and expressed, but it is limited by the examples chosen. Anything outside the examples may remain untamed or unpredictable.</p>
+
+            <h3>2.3 Reinforcement Learning from Human Feedback (RLHF)</h3>
+
+            <p>Even after supervised fine-tuning, there are many ways the model could give plausible but incorrect or unsafe answers. RLHF helps address this:</p>
+
+            <ol>
+                <li>The model generates multiple possible responses to a prompt.</li>
+                <li>Human evaluators rank these responses based on correctness, helpfulness, clarity, and safety.</li>
+                <li>The model is fine-tuned to prefer higher-ranked outputs using a reward system.</li>
+            </ol>
+
+            <p><strong>Analogy:</strong> It's like a teacher grading essays. Over time, the student (model) learns to produce answers that would score higher consistently.</p>
+
+            <h3>2.4 Alignment and Safety Measures – Final Oversight</h3>
+
+            <p><strong>Input:</strong> Trained model from pretraining + SFT + RLHF</p>
+            <p><strong>Objective:</strong> Reduce risks from unsafe, biased, or harmful outputs</p>
+
+            <p><strong>Process:</strong></p>
+            <ul>
+                <li>Apply content filters to block unsafe responses</li>
+                <li>Conduct adversarial testing to expose and correct untamed reasoning</li>
+                <li>Iteratively update alignment rules and fine-tune further if necessary</li>
+            </ul>
+
+            <p><strong>Output:</strong> A deployed model aligned with ethical and safety guidelines</p>
+
+            <p><strong>Key Notes:</strong></p>
+            <ul>
+                <li>Cannot eliminate all untamed reasoning or bias</li>
+                <li>Balances creativity, usefulness, and safety</li>
+                <li>Users must still critically assess outputs</li>
+            </ul>
+
+            <h2>3. Emergent Behavior and Untamed Reasoning</h2>
+
+            <p>Even after pretraining, fine-tuning, and RLHF, large models like ChatGPT can display untamed reasoning. This happens because the model has billions of parameters encoding subtle patterns from its training data, far beyond what human supervisors can directly observe. Some reasoning patterns are never explicitly guided, but they emerge when the model encounters unusual or complex prompts. This happens because:</p>
+
+            <ul>
+                <li>The model has billions of parameters. Each parameter encodes some subtle pattern from training.</li>
+                <li>Human oversight can only cover a tiny fraction of possible prompts.</li>
+                <li>Some patterns never appear during training and may produce novel reasoning chains.</li>
+            </ul>
+
+            <p><strong>Examples of emergent behavior:</strong></p>
+            <ul>
+                <li>The model might invent a new analogy for a legal concept that a human trainer never provided.</li>
+                <li>It could combine concepts creatively, like explaining blockchain taxation using analogies from classical trusts.</li>
+                <li>Sometimes, emergent behavior can be risky or incorrect, such as producing hallucinated facts.</li>
+            </ul>
+
+            <h3>Example 1: Legal Reasoning</h3>
+
+            <p>Suppose you ask:</p>
+
+            <p><em>"Can a charitable trust apply Section 11 benefits to a donation received anonymously for a building fund, while also recognizing a sundry creditor liability for expenses incurred in a separate state?"</em></p>
+
+            <p>A human trainer might never have provided an example exactly like this. The model might:</p>
+
+            <ul>
+                <li>Connect unrelated legal concepts creatively</li>
+                <li>Suggest a multi-step reasoning chain:
+                    <ol>
+                        <li>Recognize that Section 11 allows exemption for application of income</li>
+                        <li>Note that anonymous donations have special reporting rules</li>
+                        <li>Attempt to link sundry creditor liabilities to application of income rules</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <p>The resulting answer could be coherent but not fully accurate, because it blends concepts in ways no human explicitly approved. This is untamed reasoning: the model is generating logic beyond its fine-tuning supervision.</p>
+
+            <h3>Example 2: Scientific Analogies</h3>
+
+            <p>If prompted:</p>
+
+            <p><em>"Explain short-term capital gains in terms of quantum mechanics."</em></p>
+
+            <p>The model might produce an analogy like:</p>
+
+            <ul>
+                <li>"Short-term capital gains fluctuate like a particle's position in quantum uncertainty; rapid changes in market value resemble probabilistic wave functions collapsing on observation."</li>
+            </ul>
+
+            <p>This is creative and emergent, connecting two domains (finance and physics) in a way humans didn't teach it. The analogy may be insightful, or it could mislead if taken literally — a perfect example of untamed reasoning.</p>
+
+            <p>This shows both the power and risk of large models: they generalize creatively, but unpredictably.</p>
+
+            <h2>4. Human Bias in Fine-tuning</h2>
+
+            <p>Human supervision solves many problems, but it introduces bias.</p>
+
+            <ul>
+                <li>Trainers rank outputs based on their own cultural, ethical, and professional norms.</li>
+                <li>Some viewpoints may be overrepresented, while others are underrepresented.</li>
+                <li><strong>Example:</strong> If all trainers prefer conservative legal interpretations, the model may produce less progressive reasoning even when justified.</li>
+            </ul>
+
+            <p>This creates a trade-off:</p>
+            <ul>
+                <li><strong>Without humans:</strong> Emergent reasoning may be unsafe or harmful</li>
+                <li><strong>With humans:</strong> Reasoning is aligned, but influenced by human biases</li>
+            </ul>
+
+            <p>Human supervision ensures alignment, but it also introduces bias, reflecting cultural, ethical, and personal norms. Here's how bias can show up:</p>
+
+            <h3>Example 1: Cultural Bias in Ethics</h3>
+
+            <ul>
+                <li>If trainers consistently favor Western legal or ethical norms, the model may provide answers reflecting those values.</li>
+                <li><strong>Question:</strong> "Is it ethical for a government to prioritize urban development over rural communities?"</li>
+                <li>Model output may overemphasize urban-centric policies if the training examples were biased toward Western urban perspectives.</li>
+            </ul>
+
+            <h3>Example 2: Gender or Occupational Bias</h3>
+
+            <ul>
+                <li>When asked to provide examples of professions or roles:
+                    <ul>
+                        <li><strong>Question:</strong> "Who is a typical engineer?"</li>
+                        <li>Biased output might default to male pronouns, reflecting patterns in the training data and fine-tuning ranks.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Example 3: Political or Legal Bias</h3>
+
+            <ul>
+                <li>Suppose the model is asked about a controversial law.</li>
+                <li>Its answer may reflect the majority viewpoint present in the dataset or human rankings, underrepresenting minority or dissenting perspectives.</li>
+            </ul>
+
+            <p>These biases are subtle, often unnoticed, and can accumulate over large outputs, affecting the perception of fairness or neutrality.</p>
+
+            <h2>5. The Fundamental Limitations</h2>
+
+            <p>Despite their impressive capabilities, large language models like ChatGPT are deeply flawed and raise serious concerns. Their reasoning is entirely pattern-based, producing outputs that can be misleading, incorrect, or incoherent, especially when faced with complex or novel situations. Emergent behavior, while sometimes creative, is untamed and unpredictable, making the models inherently unreliable for critical tasks.</p>
+
+            <p>Human fine-tuning and alignment may mitigate some risks, but they introduce biases that reflect cultural, social, and personal perspectives, often amplifying systemic inequities rather than correcting them. Moreover, the models have no true understanding, no morality, and no accountability, meaning they cannot discern ethical consequences, fact from fiction, or long-term impact.</p>
+
+            <p>Users may be lulled into overconfidence, believing the AI is more intelligent or trustworthy than it really is. In essence, while LLMs are powerful tools, they are imperfect, opaque, and potentially dangerous, and society must approach them with extreme caution rather than blind enthusiasm.</p>
+        </article>
+
+        <footer>
+            <div class="footer-nav">
+                <a href="index.html" class="footer-link">← Back to Articles</a>
+            </div>
+            <p class="copyright">© 2026 Vichar Lok · All rights reserved</p>
+        </footer>
+    </div>
+</body>
+</html>
