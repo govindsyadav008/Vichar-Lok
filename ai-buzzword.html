@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Intelligence: Beyond the Buzzword — Vichar Lok</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=Spectral:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        :root {
+            --color-bg: #fefefe;
+            --color-text: #1a1a1a;
+            --color-text-muted: #666666;
+            --color-border: #e5e5e5;
+            --color-hover: #f5f5f5;
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Spectral', serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+ 
+        body {
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            font-weight: 300;
+        }
+ 
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+ 
+        /* Navigation */
+        nav {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+ 
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+ 
+        .back-link:hover {
+            opacity: 0.6;
+        }
+ 
+        /* Article Header */
+        .article-header {
+            padding: 4rem 0 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+ 
+        .article-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+ 
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+ 
+        .article-intro {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+ 
+        /* Article Content */
+        .article-content {
+            padding-bottom: 4rem;
+        }
+ 
+        .article-content h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            margin: 3rem 0 1.5rem;
+        }
+ 
+        .article-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 2.5rem 0 1rem;
+        }
+ 
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+ 
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+ 
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+ 
+        .article-content strong {
+            font-weight: 600;
+        }
+ 
+        .article-content em {
+            font-style: italic;
+        }
+ 
+        /* Cycle Diagram */
+        .cycle-diagram {
+            margin: 2.5rem 0;
+            padding: 2rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            text-align: center;
+        }
+ 
+        .cycle-diagram-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+ 
+        .cycle-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+ 
+        .cycle-step {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--color-text);
+            letter-spacing: 0.05em;
+        }
+ 
+        .cycle-arrow {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+        }
+ 
+        /* Closing note */
+        .closing-note {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            font-style: italic;
+            color: var(--color-text-muted);
+        }
+ 
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+ 
+        .footer-nav {
+            margin-bottom: 2rem;
+        }
+ 
+        .footer-link {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+ 
+        .footer-link:hover {
+            opacity: 0.6;
+        }
+ 
+        .copyright {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+        }
+ 
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+ 
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                font-size: 17px;
+            }
+ 
+            .container {
+                padding: 0 1.5rem;
+            }
+ 
+            .article-header {
+                padding: 3rem 0 2rem;
+            }
+ 
+            .article-content h2 {
+                font-size: 1.75rem;
+            }
+ 
+            .article-content h3 {
+                font-size: 1.35rem;
+            }
+ 
+            .cycle-steps {
+                flex-direction: column;
+            }
+ 
+            .cycle-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="back-link">← Back to Articles</a>
+        </nav>
+ 
+        <header class="article-header">
+            <div class="article-meta">
+                <span>April 27, 2026</span>
+                <span style="margin: 0 1rem;">·</span>
+                <span>12 min read</span>
+            </div>
+            <h1>Artificial Intelligence: Beyond the Buzzword</h1>
+            <p class="article-intro">
+                The phrase "Artificial Intelligence" has quietly transformed from a precise scientific term into a widely misused buzzword. To truly grasp both the potential and the limitations of AI, one must go beyond the hype and examine what actually happens at a granular level inside these systems.
+            </p>
+        </header>
+ 
+        <article class="article-content">
+ 
+            <p>At the core of modern Generative AI lie Large Language Models (LLMs). Despite their impressive capabilities, their fundamental task is surprisingly simple: predict the next word in a sequence. However, the process through which this happens is deeply mathematical and layered with complexity.</p>
+ 
+            <h2>1. From Words to Mathematical Space</h2>
+ 
+            <p>When a user inputs a sentence, the system does not interpret it as language in the human sense. Instead, it transforms it step by step:</p>
+ 
+            <ul>
+                <li><strong>Words → Tokens:</strong> The sentence is broken into smaller units called tokens</li>
+                <li><strong>Tokens → Numbers:</strong> Each token is assigned a numerical identity</li>
+                <li><strong>Numbers → Embeddings:</strong> Each token is converted into a high-dimensional vector</li>
+                <li><strong>Vectors → Meaning Space:</strong> These vectors are arranged in a multidimensional space where similar meanings are placed closer together</li>
+            </ul>
+ 
+            <p>A typical embedding may have around 12,000 parameters, meaning each word is represented as a point in a highly complex mathematical space. This spatial structure is what allows the model to relate words like "happy" and "joyful," even though they are different in form.</p>
+ 
+            <h2>2. The Transformer: A Major Shift</h2>
+ 
+            <p>A major shift in how these models work came in 2017 with the paper <em>Attention Is All You Need</em> by researchers at Google. This introduced the Transformer architecture, which replaced sequential processing with a far more powerful mechanism called attention.</p>
+ 
+            <p>Instead of reading a sentence word by word, the model processes the entire sentence at once. Each token examines every other token and determines its relevance. In simple terms, each word asks:</p>
+ 
+            <ul>
+                <li>Which other words matter to me?</li>
+                <li>How strongly am I connected to them?</li>
+            </ul>
+ 
+            <p>These relationships are calculated using attention scores through matrix multiplications, allowing each token to refine its meaning based on context.</p>
+ 
+            <h2>3. The Core Engine: Repeating Layers</h2>
+ 
+            <p>What makes modern AI powerful is not just attention — but repetition of structured layers. The process follows a cycle:</p>
+ 
+            <div class="cycle-diagram">
+                <p class="cycle-diagram-title">AI Attention and Neural Network Cycle</p>
+                <div class="cycle-steps">
+                    <span class="cycle-step">Attention Layer</span>
+                    <span class="cycle-arrow">→</span>
+                    <span class="cycle-step">Neural Network Layer</span>
+                    <span class="cycle-arrow">→</span>
+                    <span class="cycle-step">Repeat</span>
+                    <span class="cycle-arrow">↺</span>
+                </div>
+            </div>
+ 
+            <p>With each repetition:</p>
+            <ul>
+                <li>Context becomes sharper</li>
+                <li>Meaning becomes richer</li>
+                <li>Relationships become more precise</li>
+            </ul>
+ 
+            <p>This cycle involves heavy mathematical computation, primarily matrix multiplications, where thousands of parameters are continuously updated. It is within these computations that unexpected patterns can emerge — sometimes leading to outputs that feel novel or insightful.</p>
+ 
+            <h2>4. From Computation to Language</h2>
+ 
+            <p>After multiple passes through these layers, the model generates an output:</p>
+ 
+            <ol>
+                <li>It calculates probabilities for the next possible word</li>
+                <li>Selects the most likely one</li>
+                <li>Adds it to the sequence</li>
+                <li>Repeats the process</li>
+            </ol>
+ 
+            <p>This continues until a full response is formed. Every sentence you see is built one token at a time, driven purely by statistical likelihood.</p>
+ 
+            <h2>5. The Illusion of Intelligence</h2>
+ 
+            <p>Given the sophistication of this process, the output can often feel intelligent, creative, or even profound. At times, the model may present ideas that the user did not anticipate, giving the impression that it is thinking independently.</p>
+ 
+            <p>However, it is important to remain grounded in reality. The model does not think. It does not understand. It does not feel. What it does is recognize patterns, perform mathematical transformations, and predict the next word.</p>
+ 
+            <p>Even so-called hallucinations — where the model produces confident but incorrect information — are simply outcomes of probabilistic prediction, not intentional errors.</p>
+ 
+            <h2>6. Intelligence Without Understanding</h2>
+ 
+            <p>What we call Artificial Intelligence today is, in essence, a highly advanced system of pattern recognition and language generation. It can simulate reasoning but does not truly reason. It can produce language that appears meaningful but does not comprehend meaning in the human sense.</p>
+ 
+            <p>This distinction is subtle, yet fundamental.</p>
+ 
+            <p class="closing-note">And it naturally leads to a deeper question — one that pushes beyond engineering into philosophy: Can AI ever become truly sentient? That, perhaps, is a discussion for the next article.</p>
+ 
+        </article>
+ 
+        <footer>
+            <div class="footer-nav">
+                <a href="index.html" class="footer-link">← Back to Articles</a>
+            </div>
+            <p class="copyright">© 2026 Vichar Lok · All rights reserved</p>
+        </footer>
+    </div>
+</body>
+</html>
